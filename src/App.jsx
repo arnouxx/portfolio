@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react"
-import { motion } from "framer-motion"
+import { motion, useScroll, useSpring } from "framer-motion"
 import { ArrowUpRight, Mail } from "lucide-react"
+import Lenis from "lenis"
+import "lenis/dist/lenis.css"
 
 function GithubIcon({ className = "w-5 h-5" }) {
   return (
@@ -50,7 +52,59 @@ const navItems = [
 
 export default function App() {
   const glowRef = useRef(null)
+  const lenisRef = useRef(null)
   const [activeSection, setActiveSection] = useState("about")
+
+  // Framer Motion smooth scroll progress
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  })
+
+  // Smooth inertial scrolling with Lenis (native touch on mobile, buttery on desktop)
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return
+    }
+
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    })
+    lenisRef.current = lenis
+
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+
+    const rafId = requestAnimationFrame(raf)
+
+    return () => {
+      cancelAnimationFrame(rafId)
+      lenis.destroy()
+      lenisRef.current = null
+    }
+  }, [])
+
+  // Smooth scroll helper for both mobile and desktop
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(el, {
+        offset: window.innerWidth >= 1024 ? 0 : -30,
+        duration: 1.2,
+      })
+    } else {
+      el.scrollIntoView({ behavior: "smooth" })
+    }
+  }
 
   // Interactive mouse glow following cursor
   useEffect(() => {
@@ -65,7 +119,7 @@ export default function App() {
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
-  // Scroll spy to highlight active section on the left nav
+  // Scroll spy to highlight active section on navs
   useEffect(() => {
     const handleScroll = () => {
       const sectionIds = ["about", "experience", "projects", "skills"]
@@ -91,6 +145,11 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-black text-white selection:bg-blue-500 selection:text-white">
+      {/* Framer Motion Top Scroll Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 z-50 h-[2px] origin-left bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500 pointer-events-none"
+        style={{ scaleX }}
+      />
       {/* Background Grid Pattern (Preserved) */}
       <div
         className="pointer-events-none fixed inset-0 z-0 opacity-[0.035]"
@@ -156,7 +215,7 @@ export default function App() {
                           href={item.href}
                           onClick={(e) => {
                             e.preventDefault()
-                            document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth" })
+                            scrollToSection(item.id)
                           }}
                           className="group flex items-center py-3"
                         >
@@ -230,8 +289,12 @@ export default function App() {
           {/* ================= RIGHT COLUMN (Scrollable Content) ================= */}
           <main id="content" className="pt-24 lg:w-1/2 lg:py-24">
             {/* --- ABOUT SECTION --- */}
-            <section
+            <motion.section
               id="about"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="About me"
             >
@@ -260,11 +323,15 @@ export default function App() {
                   <span className="font-medium text-white">Atomic Habits</span>. When I'm away from screens, I love being out and about—either hanging out with a group of friends or wandering around solo with some good music.
                 </p>
               </div>
-            </section>
+            </motion.section>
 
             {/* --- EXPERIENCE & EDUCATION SECTION --- */}
-            <section
+            <motion.section
               id="experience"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="Work experience and education"
             >
@@ -431,11 +498,15 @@ export default function App() {
                   </div>
                 </li>
               </ol>
-            </section>
+            </motion.section>
 
             {/* --- PROJECTS SECTION --- */}
-            <section
+            <motion.section
               id="projects"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="Selected projects"
             >
@@ -614,11 +685,15 @@ export default function App() {
                   <ArrowUpRight className="ml-1 inline-block h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                 </a>
               </div>
-            </section>
+            </motion.section>
 
             {/* --- SKILLS & TOOLKIT SECTION --- */}
-            <section
+            <motion.section
               id="skills"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
               aria-label="Development toolkit"
             >
@@ -711,7 +786,7 @@ export default function App() {
                   </ul>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
             {/* --- MINIMALIST FOOTER --- */}
             <footer className="max-w-md pb-16 text-xs leading-relaxed text-white/30">
@@ -725,6 +800,39 @@ export default function App() {
             </footer>
           </main>
         </div>
+      </div>
+
+      {/* Mobile Floating Bottom Nav Dock (Framer Motion smooth scrolling) */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 lg:hidden">
+        <motion.nav
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          className="flex items-center gap-1 rounded-full border border-white/10 bg-black/80 p-1.5 shadow-2xl backdrop-blur-lg"
+          aria-label="Mobile navigation"
+        >
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`relative rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
+                  isActive ? "text-white" : "text-white/50 hover:text-white"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="mobileActiveTab"
+                    className="absolute inset-0 rounded-full bg-white/15 border border-white/20"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{item.label}</span>
+              </button>
+            )
+          })}
+        </motion.nav>
       </div>
     </div>
   )
