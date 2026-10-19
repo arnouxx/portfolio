@@ -208,7 +208,7 @@ function MusicWord() {
 
 const navItems = [
   { label: "About", href: "#about", id: "about" },
-  { label: "Experience", href: "#experience", id: "experience" },
+  { label: "Internship & Educations", href: "#experience", id: "experience" },
   { label: "Projects", href: "#projects", id: "projects" },
   { label: "Skills", href: "#skills", id: "skills" },
 ]
