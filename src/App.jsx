@@ -45,8 +45,11 @@ function InstagramIcon({ className = "w-5 h-5" }) {
 
 const CHESS_PIECES = ["♟", "♞", "♝", "♜", "♛", "♚"]
 
-function getChessCursorSvg(piece) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#000000" stroke="#ffffff" stroke-width="2"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="#ffffff" font-family="sans-serif">${piece}</text></svg>`
+function getChessCursorSvg(piece, isWhiteTheme) {
+  const bg = isWhiteTheme ? "#ffffff" : "#000000"
+  const stroke = isWhiteTheme ? "#000000" : "#ffffff"
+  const fill = isWhiteTheme ? "#000000" : "#ffffff"
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="${bg}" stroke="${stroke}" stroke-width="2"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="${fill}" font-family="sans-serif">${piece}</text></svg>`
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}") 16 16, pointer`
 }
 
@@ -63,67 +66,44 @@ function getMusicCursorSvg() {
 function ChessWord() {
   const [isHovered, setIsHovered] = useState(false)
   const [pieceIndex, setPieceIndex] = useState(0)
+  const [isWhiteTheme, setIsWhiteTheme] = useState(false)
 
-  // Shuffle chess piece while hovering
-  useEffect(() => {
-    if (!isHovered) return
-    const interval = setInterval(() => {
-      setPieceIndex((prev) => (prev + 1) % CHESS_PIECES.length)
-    }, 280)
-    return () => clearInterval(interval)
-  }, [isHovered])
-
-  const randomizePiece = () => {
+  const handleMouseEnter = () => {
+    // Pick a different random chess piece every time you hover
     setPieceIndex((prev) => {
-      let next = Math.floor(Math.random() * CHESS_PIECES.length)
-      return next === prev ? (prev + 1) % CHESS_PIECES.length : next
+      const candidates = CHESS_PIECES.map((_, i) => i).filter((i) => i !== prev)
+      return candidates[Math.floor(Math.random() * candidates.length)]
     })
+    // Randomly choose between black box with white text vs white box with black text
+    setIsWhiteTheme(Math.random() > 0.5)
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
   }
 
   const currentPiece = CHESS_PIECES[pieceIndex]
-  const cursorStyle = getChessCursorSvg(currentPiece)
+  const cursorStyle = getChessCursorSvg(currentPiece, isWhiteTheme)
 
   return (
     <span
-      className="relative inline-block cursor-pointer select-none"
+      className="relative inline-block cursor-pointer select-none align-baseline"
       style={{ cursor: cursorStyle }}
-      onMouseEnter={() => {
-        setIsHovered(true)
-        randomizePiece()
-      }}
-      onMouseMove={randomizePiece}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <AnimatePresence>
-        {isHovered && (
-          <motion.span
-            initial={{ opacity: 0, y: 8, scale: 0.9 }}
-            animate={{ opacity: 1, y: -26, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.9 }}
-            transition={{ duration: 0.15 }}
-            className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-1 z-30 flex items-center gap-1.5 rounded-md border border-white/30 bg-black/90 px-2 py-0.5 text-xs font-semibold text-white shadow-xl backdrop-blur-md whitespace-nowrap"
-          >
-            <span className="text-sm">{currentPiece}</span>
-            <span>Checkmate</span>
-          </motion.span>
-        )}
-      </AnimatePresence>
-
       <span
-        className={`inline-flex items-center rounded transition-all duration-200 font-medium ${
+        className={`inline-flex items-center justify-center rounded px-2 py-0.5 text-sm transition-all duration-200 min-w-[42px] ${
           isHovered
-            ? "border border-white/50 shadow-[0_0_12px_rgba(255,255,255,0.4)] scale-105"
-            : "text-white underline decoration-white/30 underline-offset-4 hover:decoration-white"
+            ? isWhiteTheme
+              ? "bg-white text-black font-bold border border-white shadow-[0_0_12px_rgba(255,255,255,0.7)] scale-105"
+              : "bg-black text-white font-bold border border-white/80 shadow-[0_0_12px_rgba(255,255,255,0.35)] scale-105"
+            : "text-white underline decoration-white/30 underline-offset-4 hover:decoration-white font-medium"
         }`}
       >
         {isHovered ? (
-          <span className="inline-flex overflow-hidden rounded-[3px] text-xs font-mono font-bold tracking-tight">
-            <span className="bg-white text-black px-1 py-0.5">c</span>
-            <span className="bg-black text-white px-1 py-0.5">h</span>
-            <span className="bg-white text-black px-1 py-0.5">e</span>
-            <span className="bg-black text-white px-1 py-0.5">s</span>
-            <span className="bg-white text-black px-1 py-0.5">s</span>
-          </span>
+          <span className="text-base leading-none select-none">{currentPiece}</span>
         ) : (
           "chess"
         )}
