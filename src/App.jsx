@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { motion, useScroll, useSpring } from "framer-motion"
+import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
 import { ArrowUpRight, Mail } from "lucide-react"
 import Lenis from "lenis"
 import "lenis/dist/lenis.css"
@@ -40,6 +40,189 @@ function InstagramIcon({ className = "w-5 h-5" }) {
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
     </svg>
+  )
+}
+
+const CHESS_PIECES = ["♟", "♞", "♝", "♜", "♛", "♚"]
+
+function getChessCursorSvg(piece) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#000000" stroke="#ffffff" stroke-width="2"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="#ffffff" font-family="sans-serif">${piece}</text></svg>`
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}") 16 16, pointer`
+}
+
+function getMangaCursorSvg() {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" fill="#18181b" stroke="#f43f5e" stroke-width="2"/><path d="M10 21c2-1 4-1 6 0 2-1 4-1 6 0V11c-2-1-4-1-6 0-2-1-4-1-6 0v10z" fill="#f43f5e" fill-opacity="0.3" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 11v10" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/></svg>`
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}") 16 16, pointer`
+}
+
+function getMusicCursorSvg() {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" fill="#030712" stroke="#38bdf8" stroke-width="2"/><path d="M10 17v4a1.5 1.5 0 0 0 1.5 1.5h1A1.5 1.5 0 0 0 14 21v-4a1.5 1.5 0 0 0-1.5-1.5h-1A1.5 1.5 0 0 0 10 17zm8 0v4a1.5 1.5 0 0 0 1.5 1.5h1a1.5 1.5 0 0 0 1.5-1.5v-4a1.5 1.5 0 0 0-1.5-1.5h-1a1.5 1.5 0 0 0-1.5 1.5z" fill="#38bdf8" stroke="#ffffff" stroke-width="1"/><path d="M10 17.5A6 6 0 0 1 22 17.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg>`
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}") 16 16, pointer`
+}
+
+function ChessWord() {
+  const [isHovered, setIsHovered] = useState(false)
+  const [pieceIndex, setPieceIndex] = useState(0)
+
+  // Shuffle chess piece while hovering
+  useEffect(() => {
+    if (!isHovered) return
+    const interval = setInterval(() => {
+      setPieceIndex((prev) => (prev + 1) % CHESS_PIECES.length)
+    }, 280)
+    return () => clearInterval(interval)
+  }, [isHovered])
+
+  const randomizePiece = () => {
+    setPieceIndex((prev) => {
+      let next = Math.floor(Math.random() * CHESS_PIECES.length)
+      return next === prev ? (prev + 1) % CHESS_PIECES.length : next
+    })
+  }
+
+  const currentPiece = CHESS_PIECES[pieceIndex]
+  const cursorStyle = getChessCursorSvg(currentPiece)
+
+  return (
+    <span
+      className="relative inline-block cursor-pointer select-none"
+      style={{ cursor: cursorStyle }}
+      onMouseEnter={() => {
+        setIsHovered(true)
+        randomizePiece()
+      }}
+      onMouseMove={randomizePiece}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <AnimatePresence>
+        {isHovered && (
+          <motion.span
+            initial={{ opacity: 0, y: 8, scale: 0.9 }}
+            animate={{ opacity: 1, y: -26, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+            className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-1 z-30 flex items-center gap-1.5 rounded-md border border-white/30 bg-black/90 px-2 py-0.5 text-xs font-semibold text-white shadow-xl backdrop-blur-md whitespace-nowrap"
+          >
+            <span className="text-sm">{currentPiece}</span>
+            <span>Checkmate</span>
+          </motion.span>
+        )}
+      </AnimatePresence>
+
+      <span
+        className={`inline-flex items-center rounded transition-all duration-200 font-medium ${
+          isHovered
+            ? "border border-white/50 shadow-[0_0_12px_rgba(255,255,255,0.4)] scale-105"
+            : "text-white underline decoration-white/30 underline-offset-4 hover:decoration-white"
+        }`}
+      >
+        {isHovered ? (
+          <span className="inline-flex overflow-hidden rounded-[3px] text-xs font-mono font-bold tracking-tight">
+            <span className="bg-white text-black px-1 py-0.5">c</span>
+            <span className="bg-black text-white px-1 py-0.5">h</span>
+            <span className="bg-white text-black px-1 py-0.5">e</span>
+            <span className="bg-black text-white px-1 py-0.5">s</span>
+            <span className="bg-white text-black px-1 py-0.5">s</span>
+          </span>
+        ) : (
+          "chess"
+        )}
+      </span>
+    </span>
+  )
+}
+
+function MangaWord() {
+  const [isHovered, setIsHovered] = useState(false)
+  const cursorStyle = getMangaCursorSvg()
+
+  return (
+    <span
+      className="relative inline-block cursor-pointer select-none"
+      style={{ cursor: cursorStyle }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <AnimatePresence>
+        {isHovered && (
+          <motion.span
+            initial={{ opacity: 0, y: 8, scale: 0.9 }}
+            animate={{ opacity: 1, y: -26, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+            className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-1 z-30 flex items-center gap-1.5 rounded-md border border-rose-500/40 bg-zinc-950/95 px-2 py-0.5 text-xs font-semibold text-rose-300 shadow-xl backdrop-blur-md whitespace-nowrap"
+          >
+            <span>📖</span>
+            <span>巻 · Manga</span>
+          </motion.span>
+        )}
+      </AnimatePresence>
+
+      <span
+        className={`inline-flex items-center rounded transition-all duration-200 font-medium ${
+          isHovered
+            ? "bg-white text-black font-black uppercase tracking-wider px-1.5 py-0.5 rounded shadow-[2px_2px_0px_#f43f5e] -rotate-1 scale-105 text-xs"
+            : "text-white underline decoration-white/30 underline-offset-4 hover:decoration-white"
+        }`}
+      >
+        manga
+      </span>
+    </span>
+  )
+}
+
+function MusicWord() {
+  const [isHovered, setIsHovered] = useState(false)
+  const cursorStyle = getMusicCursorSvg()
+
+  return (
+    <span
+      className="relative inline-block cursor-pointer select-none"
+      style={{ cursor: cursorStyle }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <AnimatePresence>
+        {isHovered && (
+          <motion.span
+            initial={{ opacity: 0, y: 8, scale: 0.9 }}
+            animate={{ opacity: 1, y: -26, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.9 }}
+            transition={{ duration: 0.15 }}
+            className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-1 z-30 flex items-center gap-1.5 rounded-md border border-cyan-500/40 bg-slate-950/95 px-2 py-0.5 text-xs font-semibold text-cyan-300 shadow-xl backdrop-blur-md whitespace-nowrap"
+          >
+            <span>🎧</span>
+            <span>Now Vibing</span>
+          </motion.span>
+        )}
+      </AnimatePresence>
+
+      <span
+        className={`inline-flex items-center rounded transition-all duration-200 font-medium ${
+          isHovered
+            ? "bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 px-1.5 py-0.5 rounded shadow-[0_0_12px_rgba(56,189,248,0.25)] scale-105"
+            : "text-white underline decoration-white/30 underline-offset-4 hover:decoration-white"
+        }`}
+      >
+        <span>music</span>
+        {isHovered && (
+          <span className="inline-flex items-end gap-[2px] ml-1.5 h-3 pb-0.5">
+            <span
+              className="w-[2px] bg-cyan-400 rounded-full animate-pulse"
+              style={{ height: "60%" }}
+            />
+            <span
+              className="w-[2px] bg-blue-400 rounded-full animate-pulse"
+              style={{ height: "100%", animationDelay: "150ms" }}
+            />
+            <span
+              className="w-[2px] bg-indigo-400 rounded-full animate-pulse"
+              style={{ height: "75%", animationDelay: "300ms" }}
+            />
+          </span>
+        )}
+      </span>
+    </span>
   )
 }
 
@@ -317,10 +500,10 @@ export default function App() {
                 </p>
 
                 <p>
-                  In my spare time, I enjoy playing{" "}
-                  <span className="font-medium text-white">chess</span>, reading{" "}
-                  <span className="font-medium text-white">manga</span>, or flipping through perspective-shifting books like{" "}
-                  <span className="font-medium text-white">Atomic Habits</span>. When I'm away from screens, I love being out and about—either hanging out with a group of friends or wandering around solo with some good music.
+                  In my spare time, I enjoy playing <ChessWord />, reading{" "}
+                  <MangaWord />, or flipping through perspective-shifting books like{" "}
+                  <span className="font-medium text-white">Atomic Habits</span>. When I'm away from screens, I love being out and about—either hanging out with a group of friends or wandering around solo with some good{" "}
+                  <MusicWord />.
                 </p>
               </div>
             </motion.section>
