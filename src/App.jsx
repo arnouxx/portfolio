@@ -406,7 +406,7 @@ export default function App() {
             <ul className="ml-1 mt-8 flex items-center gap-5 text-white/40" aria-label="Social media">
               <li>
                 <a
-                  href="https://github.com"
+                  href="https://github.com/arnouxx"
                   target="_blank"
                   rel="noreferrer"
                   className="block hover:text-white transition-colors duration-200"
@@ -417,7 +417,7 @@ export default function App() {
               </li>
               <li>
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/abdul-azim-32b194287"
                   target="_blank"
                   rel="noreferrer"
                   className="block hover:text-white transition-colors duration-200"
@@ -428,7 +428,7 @@ export default function App() {
               </li>
               <li>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/arnoux000/"
                   target="_blank"
                   rel="noreferrer"
                   className="block hover:text-white transition-colors duration-200"
@@ -501,7 +501,7 @@ export default function App() {
               {/* Mobile Sticky Section Header */}
               <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-black/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
                 <h2 className="text-sm font-bold uppercase tracking-widest text-white">
-                  Experience
+                  Internship & Educations
                 </h2>
               </div>
 
