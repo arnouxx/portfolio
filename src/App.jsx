@@ -819,7 +819,11 @@ export default function App() {
                       </ul>
                       <div className="mt-4 flex justify-end">
                         <button
-                          onClick={() => setMediaModal({ projectId: "devscord", index: 0 })}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setMediaModal({ projectId: "devscord", index: 0 })
+                          }}
                           className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
                         >
                           <Eye className="h-3 w-3" />
@@ -881,7 +885,11 @@ export default function App() {
                       </ul>
                       <div className="mt-4 flex justify-end">
                         <button
-                          onClick={() => setMediaModal({ projectId: "smartattendance", index: 0 })}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setMediaModal({ projectId: "smartattendance", index: 0 })
+                          }}
                           className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
                         >
                           <Eye className="h-3 w-3" />
@@ -940,7 +948,11 @@ export default function App() {
                       </ul>
                       <div className="mt-4 flex justify-end">
                         <button
-                          onClick={() => setMediaModal({ projectId: "vrwebtour", index: 0 })}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setMediaModal({ projectId: "vrwebtour", index: 0 })
+                          }}
                           className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
                         >
                           <Eye className="h-3 w-3" />
@@ -999,7 +1011,11 @@ export default function App() {
                       </ul>
                       <div className="mt-4 flex justify-end">
                         <button
-                          onClick={() => setMediaModal({ projectId: "tresssalon", index: 0 })}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setMediaModal({ projectId: "tresssalon", index: 0 })
+                          }}
                           className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
                         >
                           <Eye className="h-3 w-3" />
@@ -1058,7 +1074,11 @@ export default function App() {
                       </ul>
                       <div className="mt-4 flex justify-end">
                         <button
-                          onClick={() => setMediaModal({ projectId: "jadimpex", index: 0 })}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setMediaModal({ projectId: "jadimpex", index: 0 })
+                          }}
                           className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
                         >
                           <Eye className="h-3 w-3" />
