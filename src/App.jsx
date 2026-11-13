@@ -788,8 +788,7 @@ export default function App() {
                           <a
                             className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
                             href="#"
-                            target="_blank"
-                            rel="noreferrer"
+                            onClick={(e) => e.preventDefault()}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -852,8 +851,7 @@ export default function App() {
                           <a
                             className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
                             href="#"
-                            target="_blank"
-                            rel="noreferrer"
+                            onClick={(e) => e.preventDefault()}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -918,8 +916,7 @@ export default function App() {
                           <a
                             className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
                             href="#"
-                            target="_blank"
-                            rel="noreferrer"
+                            onClick={(e) => e.preventDefault()}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -981,8 +978,7 @@ export default function App() {
                           <a
                             className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
                             href="#"
-                            target="_blank"
-                            rel="noreferrer"
+                            onClick={(e) => e.preventDefault()}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -1044,8 +1040,7 @@ export default function App() {
                           <a
                             className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
                             href="#"
-                            target="_blank"
-                            rel="noreferrer"
+                            onClick={(e) => e.preventDefault()}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
