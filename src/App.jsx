@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
-import { ArrowUpRight, Mail } from "lucide-react"
+import { ArrowUpRight, Mail, Eye, X, ChevronLeft, ChevronRight } from "lucide-react"
 import Lenis from "lenis"
 import "lenis/dist/lenis.css"
 
@@ -213,10 +213,99 @@ const navItems = [
   { label: "Skills", href: "#skills", id: "skills" },
 ]
 
+const PROJECT_MEDIA = {
+  devscord: [
+    { type: "image", src: "/assets/projects/devscord/devmainpg01.png", caption: "Dashboard Home" },
+    { type: "image", src: "/assets/projects/devscord/devmainpg02.png", caption: "Project Board" },
+    { type: "image", src: "/assets/projects/devscord/devmainpg03.png", caption: "Code Editor" },
+    { type: "image", src: "/assets/projects/devscord/devmainpg04.png", caption: "Real-Time Chat" },
+    { type: "image", src: "/assets/projects/devscord/devs_codejoinerpage.png", caption: "Code Joiner" },
+    { type: "image", src: "/assets/projects/devscord/dev_code_creatorpage.png", caption: "Code Creator" },
+    { type: "image", src: "/assets/projects/devscord/dev_createaccpage.png", caption: "Create Account" },
+    { type: "image", src: "/assets/projects/devscord/devcodeeditpg.png", caption: "Code Edit Page" },
+  ],
+  smartattendance: [],
+  vrwebtour: [],
+  tresssalon: [],
+  jadimpex: [],
+}
+
+function ProjectMediaModal({ projectId, onClose }) {
+  const [index, setIndex] = useState(0)
+  const media = PROJECT_MEDIA[projectId] || []
+  const item = media[index] || {}
+  const isImage = item.type === "image"
+
+  if (!media.length) {
+    return (
+      <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-6 text-white">
+        <button onClick={onClose} className="absolute top-4 right-4 z-10 text-white/60 hover:text-white">
+          <X className="h-6 w-6" />
+        </button>
+        <h3 className="mb-4 text-lg font-medium">No media available</h3>
+        <p className="max-w-xs text-center text-white/50">
+          Screenshots and videos for this project will appear here soon.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 md:p-6 text-white">
+      <button onClick={onClose} className="absolute top-4 right-4 z-10 text-white/60 hover:text-white">
+        <X className="h-6 w-6" />
+      </button>
+
+      <div className="relative w-full max-w-5xl max-h-[82vh] flex items-center justify-center">
+        <button
+          onClick={() => setIndex((i) => (i === 0 ? media.length - 1 : i - 1))}
+          disabled={media.length === 1}
+          aria-label="Previous"
+          className="absolute left-2 z-20 p-2.5 rounded-full bg-black/60 text-white hover:bg-white/20 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        {isImage ? (
+          <img
+            src={item.src}
+            alt={item.caption || ""}
+            className="max-w-full max-h-[64vh] object-contain rounded-lg border border-white/10 shadow-2xl"
+            loading="lazy"
+          />
+        ) : (
+          <video
+            controls
+            autoPlay
+            playsInline
+            className="max-w-full max-h-[64vh] rounded-lg border border-white/10 shadow-2xl bg-black"
+          >
+            <source src={item.src} />
+            Your browser does not support the video tag.
+          </video>
+        )}
+        <button
+          onClick={() => setIndex((i) => (i === media.length - 1 ? 0 : i + 1))}
+          disabled={media.length === 1}
+          aria-label="Next"
+          className="absolute right-2 z-20 p-2.5 rounded-full bg-black/60 text-white hover:bg-white/20 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+      </div>
+
+      <div className="mt-6 flex items-center justify-between w-full max-w-5xl px-4">
+        <span className="text-sm text-white/60">{item.caption || ""}</span>
+        <span className="text-sm text-white/50">{index + 1} / {media.length}</span>
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   const glowRef = useRef(null)
   const lenisRef = useRef(null)
   const [activeSection, setActiveSection] = useState("about")
+  const [mediaModal, setMediaModal] = useState(null)
 
   // Framer Motion smooth scroll progress
   const { scrollYProgress } = useScroll()
@@ -728,6 +817,15 @@ export default function App() {
                           </li>
                         ))}
                       </ul>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          onClick={() => setMediaModal({ projectId: "devscord", index: 0 })}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                        >
+                          <Eye className="h-3 w-3" />
+                          Show Screenshots &amp; Videos
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -781,6 +879,15 @@ export default function App() {
                           )
                         )}
                       </ul>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          onClick={() => setMediaModal({ projectId: "smartattendance", index: 0 })}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                        >
+                          <Eye className="h-3 w-3" />
+                          Show Screenshots &amp; Videos
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -831,6 +938,133 @@ export default function App() {
                           </li>
                         ))}
                       </ul>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          onClick={() => setMediaModal({ projectId: "vrwebtour", index: 0 })}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                        >
+                          <Eye className="h-3 w-3" />
+                          Show Screenshots &amp; Videos
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                {/* Project 4: Tress Salon */}
+                <li className="mb-12">
+                  <div className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                    <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
+
+                    {/* Thumbnail preview badge */}
+                    <div className="z-10 sm:col-span-2">
+                      <div className="flex h-20 w-full items-center justify-center rounded-lg border border-white/10 bg-gradient-to-br from-rose-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-rose-400 shadow-sm sm:h-18">
+                        TRESS<span className="text-white">SALON</span>
+                      </div>
+                    </div>
+
+                    <div className="z-10 sm:col-span-6">
+                      <h3 className="font-medium leading-snug text-white">
+                        <div>
+                          <a
+                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
+                            href="#"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
+                            <span>
+                              Tress Salon
+                              <ArrowUpRight className="ml-1 inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none" />
+                            </span>
+                          </a>
+                        </div>
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-normal text-white/50">
+                        A modern beauty & hair salon booking platform that lets customers browse
+                        services, book appointments online, and manage their salon visits seamlessly.
+                        Designed for a smooth client experience with responsive UI.
+                      </p>
+
+                      <ul className="mt-3 flex flex-wrap gap-2" aria-label="Technologies used">
+                        {["React", "Tailwind CSS", "Node.js", "MongoDB"].map((tech) => (
+                          <li
+                            key={tech}
+                            className="flex items-center rounded-full bg-rose-500/10 px-3 py-1 text-xs font-medium leading-5 text-rose-300"
+                          >
+                            {tech}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          onClick={() => setMediaModal({ projectId: "tresssalon", index: 0 })}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                        >
+                          <Eye className="h-3 w-3" />
+                          Show Screenshots &amp; Videos
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                {/* Project 5: JADIMPEX */}
+                <li className="mb-12">
+                  <div className="group relative grid gap-4 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                    <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
+
+                    {/* Thumbnail preview badge */}
+                    <div className="z-10 sm:col-span-2">
+                      <div className="flex h-20 w-full items-center justify-center rounded-lg border border-white/10 bg-gradient-to-br from-amber-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-amber-400 shadow-sm sm:h-18">
+                        JADI<span className="text-white">MPEX</span>
+                      </div>
+                    </div>
+
+                    <div className="z-10 sm:col-span-6">
+                      <h3 className="font-medium leading-snug text-white">
+                        <div>
+                          <a
+                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
+                            href="#"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
+                            <span>
+                              JADIMPEX
+                              <ArrowUpRight className="ml-1 inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none" />
+                            </span>
+                          </a>
+                        </div>
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-normal text-white/50">
+                        An import-export trade website for JADIMPEX showcasing global product
+                        catalogs, shipment tracking, and inquiry management. Built to connect
+                        buyers and suppliers across international markets.
+                      </p>
+
+                      <ul className="mt-3 flex flex-wrap gap-2" aria-label="Technologies used">
+                        {["HTML", "CSS", "JavaScript", "PHP", "MySQL"].map((tech) => (
+                          <li
+                            key={tech}
+                            className="flex items-center rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium leading-5 text-amber-300"
+                          >
+                            {tech}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          onClick={() => setMediaModal({ projectId: "jadimpex", index: 0 })}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                        >
+                          <Eye className="h-3 w-3" />
+                          Show Screenshots &amp; Videos
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -849,6 +1083,13 @@ export default function App() {
                 </a>
               </div>
             </motion.section>
+
+            {mediaModal && (
+              <ProjectMediaModal
+                projectId={mediaModal.projectId}
+                onClose={() => setMediaModal(null)}
+              />
+            )}
 
             {/* --- SKILLS & TOOLKIT SECTION --- */}
             <motion.section
