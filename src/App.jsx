@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
-import { ArrowUpRight, Mail, Eye, X, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowUpRight, Mail, Eye, X, ChevronLeft, ChevronRight, Play, Film } from "lucide-react"
 import Lenis from "lenis"
 import "lenis/dist/lenis.css"
 
@@ -233,12 +233,14 @@ const PROJECT_MEDIA = {
     { type: "image", src: "/assets/projects/devscord/devcodeeditpg.png", caption: "Devscord — Full In-Browser IDE with Syntax Highlighting" },
   ],
   jadimpex: [
+    { type: "video", src: "/assets/projects/jadimpex/jadimpexvid.mp4", caption: "JADIMPEX — Full Platform Video Walkthrough & Interactive Demo" },
     { type: "image", src: "/assets/projects/jadimpex/jadimpex-trade-solutions.png", caption: "JADIMPEX — Global Trade & Export Solutions Hero Showcase" },
     { type: "image", src: "/assets/projects/jadimpex/jadimpex-dusk-showcase.png", caption: "JADIMPEX — International Logistics & Global Supply Chain at Dusk" },
     { type: "image", src: "/assets/projects/jadimpex/jadimpex-brand.png", caption: "JADIMPEX — High-Resolution Corporate Brand Identity" },
     { type: "image", src: "/assets/projects/jadimpex/jadimpex-clean-logo.png", caption: "JADIMPEX — Eco-Friendly Jute & Bamboo Export Emblem" },
   ],
   tresssalon: [
+    { type: "video", src: "/assets/projects/tress-salon/tresssalonvid.mp4", caption: "Tress Salon — Full Platform Video Walkthrough & Booking Experience" },
     { type: "image", src: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Luxury Salon Interior & Premium Styling Stations" },
     { type: "image", src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Exclusive Bridal Lounge & Bespoke Makeover Suite" },
     { type: "image", src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Keratin & Protein Hair Smoothening Therapy" },
@@ -424,8 +426,9 @@ function ProjectMediaModal({ projectId, onClose }) {
                 {m.type === "image" ? (
                   <img src={m.src} alt="" className="h-full w-full object-cover" />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-zinc-900 text-[10px] text-white">
-                    ▶ Video
+                  <div className="flex h-full w-full items-center justify-center bg-zinc-900/90 text-[10px] font-semibold text-white gap-1.5 border border-white/10">
+                    <Play className="h-3.5 w-3.5 fill-white text-white" />
+                    <span>Video</span>
                   </div>
                 )}
               </button>
@@ -912,10 +915,21 @@ export default function App() {
                     <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
 
                     {/* Thumbnail preview badge */}
-                    <div className="z-10 sm:col-span-2">
-                      <div className="flex h-20 w-full items-center justify-center rounded-lg border border-white/10 bg-gradient-to-br from-blue-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-blue-400 shadow-sm sm:h-18">
+                    <div className="relative z-20 sm:col-span-2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setMediaModal({ projectId: "devscord", index: 0 })
+                        }}
+                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-blue-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-blue-400 shadow-sm transition-all hover:border-blue-400/50 hover:shadow-[0_0_15px_rgba(59,130,246,0.25)] sm:h-18 cursor-pointer"
+                        title="View Devscord Screenshots"
+                      >
                         DEVS<span className="text-white">CORD</span>
-                      </div>
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity">
+                          <Eye className="h-5 w-5 text-blue-400 drop-shadow" />
+                        </div>
+                      </button>
                     </div>
 
                     <div className="z-10 sm:col-span-6">
@@ -955,17 +969,20 @@ export default function App() {
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-4 flex justify-end">
+                      <div className="relative z-20 mt-4 flex justify-end">
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation()
                             setMediaModal({ projectId: "devscord", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
+                          className="group/btn inline-flex items-center gap-2 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3.5 py-1.5 text-xs font-semibold text-blue-300 shadow-sm transition-all duration-200 hover:border-blue-400 hover:bg-blue-500/20 hover:text-white hover:shadow-[0_0_16px_rgba(59,130,246,0.3)] cursor-pointer"
                         >
-                          <Eye className="h-3.5 w-3.5" />
-                          Show Screenshots &amp; Videos
+                          <Eye className="h-3.5 w-3.5 text-blue-400 transition-transform group-hover/btn:scale-110" />
+                          <span>View Screenshots</span>
+                          <span className="rounded-full bg-blue-400/20 px-1.5 py-0.5 text-[10px] font-bold text-blue-200">
+                            8
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -978,10 +995,21 @@ export default function App() {
                     <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
 
                     {/* Thumbnail preview badge */}
-                    <div className="z-10 sm:col-span-2">
-                      <div className="flex h-20 w-full items-center justify-center rounded-lg border border-white/10 bg-gradient-to-br from-indigo-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-blue-400 shadow-sm sm:h-18">
+                    <div className="relative z-20 sm:col-span-2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setMediaModal({ projectId: "smartattendance", index: 0 })
+                        }}
+                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-indigo-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-blue-400 shadow-sm transition-all hover:border-indigo-400/50 hover:shadow-[0_0_15px_rgba(99,102,241,0.25)] sm:h-18 cursor-pointer"
+                        title="View Smart Attendance Screenshots"
+                      >
                         SMART<span className="text-white">ATT</span>
-                      </div>
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity">
+                          <Eye className="h-5 w-5 text-indigo-400 drop-shadow" />
+                        </div>
+                      </button>
                     </div>
 
                     <div className="z-10 sm:col-span-6">
@@ -1023,17 +1051,20 @@ export default function App() {
                           )
                         )}
                       </ul>
-                      <div className="mt-4 flex justify-end">
+                      <div className="relative z-20 mt-4 flex justify-end">
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation()
                             setMediaModal({ projectId: "smartattendance", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
+                          className="group/btn inline-flex items-center gap-2 rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-3.5 py-1.5 text-xs font-semibold text-indigo-300 shadow-sm transition-all duration-200 hover:border-indigo-400 hover:bg-indigo-500/20 hover:text-white hover:shadow-[0_0_16px_rgba(99,102,241,0.3)] cursor-pointer"
                         >
-                          <Eye className="h-3.5 w-3.5" />
-                          Show Screenshots &amp; Videos
+                          <Eye className="h-3.5 w-3.5 text-indigo-400 transition-transform group-hover/btn:scale-110" />
+                          <span>View Screenshots</span>
+                          <span className="rounded-full bg-indigo-400/20 px-1.5 py-0.5 text-[10px] font-bold text-indigo-200">
+                            1
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -1046,10 +1077,21 @@ export default function App() {
                     <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
 
                     {/* Thumbnail preview badge */}
-                    <div className="z-10 sm:col-span-2">
-                      <div className="flex h-20 w-full items-center justify-center rounded-lg border border-white/10 bg-gradient-to-br from-cyan-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-cyan-400 shadow-sm sm:h-18">
+                    <div className="relative z-20 sm:col-span-2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setMediaModal({ projectId: "vrwebtour", index: 0 })
+                        }}
+                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-cyan-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-cyan-400 shadow-sm transition-all hover:border-cyan-400/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.25)] sm:h-18 cursor-pointer"
+                        title="View VR Web Tour Screenshots"
+                      >
                         VR<span className="text-white">TOUR</span>
-                      </div>
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity">
+                          <Eye className="h-5 w-5 text-cyan-400 drop-shadow" />
+                        </div>
+                      </button>
                     </div>
 
                     <div className="z-10 sm:col-span-6">
@@ -1088,17 +1130,20 @@ export default function App() {
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-4 flex justify-end">
+                      <div className="relative z-20 mt-4 flex justify-end">
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation()
                             setMediaModal({ projectId: "vrwebtour", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
+                          className="group/btn inline-flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1.5 text-xs font-semibold text-cyan-300 shadow-sm transition-all duration-200 hover:border-cyan-400 hover:bg-cyan-500/20 hover:text-white hover:shadow-[0_0_16px_rgba(6,182,212,0.3)] cursor-pointer"
                         >
-                          <Eye className="h-3.5 w-3.5" />
-                          Show Screenshots &amp; Videos
+                          <Eye className="h-3.5 w-3.5 text-cyan-400 transition-transform group-hover/btn:scale-110" />
+                          <span>View Screenshots</span>
+                          <span className="rounded-full bg-cyan-400/20 px-1.5 py-0.5 text-[10px] font-bold text-cyan-200">
+                            1
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -1111,10 +1156,24 @@ export default function App() {
                     <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
 
                     {/* Thumbnail preview badge */}
-                    <div className="z-10 sm:col-span-2">
-                      <div className="flex h-20 w-full items-center justify-center rounded-lg border border-white/10 bg-gradient-to-br from-rose-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-rose-400 shadow-sm sm:h-18">
+                    <div className="relative z-20 sm:col-span-2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setMediaModal({ projectId: "tresssalon", index: 0 })
+                        }}
+                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-rose-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-rose-400 shadow-sm transition-all hover:border-rose-400/50 hover:shadow-[0_0_15px_rgba(244,63,94,0.25)] sm:h-18 cursor-pointer"
+                        title="Watch Tress Salon Video & Screenshots"
+                      >
                         TRESS<span className="text-white">SALON</span>
-                      </div>
+                        <span className="absolute top-1.5 right-1.5 flex items-center gap-1 rounded-full bg-rose-500/25 px-1.5 py-0.5 text-[9px] font-semibold text-rose-200 border border-rose-500/30 backdrop-blur-sm">
+                          <Play className="h-2 w-2 fill-rose-300 text-rose-300" /> Video
+                        </span>
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity">
+                          <Play className="h-6 w-6 fill-rose-400 text-rose-400 drop-shadow" />
+                        </div>
+                      </button>
                     </div>
 
                     <div className="z-10 sm:col-span-6">
@@ -1154,17 +1213,20 @@ export default function App() {
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-4 flex justify-end">
+                      <div className="relative z-20 mt-4 flex justify-end">
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation()
                             setMediaModal({ projectId: "tresssalon", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
+                          className="group/btn inline-flex items-center gap-2 rounded-lg border border-rose-500/30 bg-rose-500/10 px-3.5 py-1.5 text-xs font-semibold text-rose-300 shadow-sm transition-all duration-200 hover:border-rose-400 hover:bg-rose-500/20 hover:text-white hover:shadow-[0_0_16px_rgba(244,63,94,0.3)] cursor-pointer"
                         >
-                          <Eye className="h-3.5 w-3.5" />
-                          Show Screenshots &amp; Videos
+                          <Play className="h-3.5 w-3.5 fill-rose-400 text-rose-400 transition-transform group-hover/btn:scale-110" />
+                          <span>Watch Video &amp; Screenshots</span>
+                          <span className="rounded-full bg-rose-400/20 px-1.5 py-0.5 text-[10px] font-bold text-rose-200">
+                            6
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -1177,10 +1239,24 @@ export default function App() {
                     <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
 
                     {/* Thumbnail preview badge */}
-                    <div className="z-10 sm:col-span-2">
-                      <div className="flex h-20 w-full items-center justify-center rounded-lg border border-white/10 bg-gradient-to-br from-amber-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-amber-400 shadow-sm sm:h-18">
+                    <div className="relative z-20 sm:col-span-2">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setMediaModal({ projectId: "jadimpex", index: 0 })
+                        }}
+                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-amber-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-amber-400 shadow-sm transition-all hover:border-amber-400/50 hover:shadow-[0_0_15px_rgba(245,158,11,0.25)] sm:h-18 cursor-pointer"
+                        title="Watch JADIMPEX Video & Screenshots"
+                      >
                         JADI<span className="text-white">MPEX</span>
-                      </div>
+                        <span className="absolute top-1.5 right-1.5 flex items-center gap-1 rounded-full bg-amber-500/25 px-1.5 py-0.5 text-[9px] font-semibold text-amber-200 border border-amber-500/30 backdrop-blur-sm">
+                          <Play className="h-2 w-2 fill-amber-300 text-amber-300" /> Video
+                        </span>
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity">
+                          <Play className="h-6 w-6 fill-amber-400 text-amber-400 drop-shadow" />
+                        </div>
+                      </button>
                     </div>
 
                     <div className="z-10 sm:col-span-6">
@@ -1219,17 +1295,20 @@ export default function App() {
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-4 flex justify-end">
+                      <div className="relative z-20 mt-4 flex justify-end">
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation()
                             setMediaModal({ projectId: "jadimpex", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
+                          className="group/btn inline-flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3.5 py-1.5 text-xs font-semibold text-amber-300 shadow-sm transition-all duration-200 hover:border-amber-400 hover:bg-amber-500/20 hover:text-white hover:shadow-[0_0_16px_rgba(245,158,11,0.3)] cursor-pointer"
                         >
-                          <Eye className="h-3.5 w-3.5" />
-                          Show Screenshots &amp; Videos
+                          <Play className="h-3.5 w-3.5 fill-amber-400 text-amber-400 transition-transform group-hover/btn:scale-110" />
+                          <span>Watch Video &amp; Screenshots</span>
+                          <span className="rounded-full bg-amber-400/20 px-1.5 py-0.5 text-[10px] font-bold text-amber-200">
+                            5
+                          </span>
                         </button>
                       </div>
                     </div>
