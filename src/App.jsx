@@ -234,6 +234,7 @@ const PROJECT_MEDIA = {
   ],
   jadimpex: [
     { type: "video", src: "/assets/projects/jadimpex/jadimpexvid.mp4", caption: "JADIMPEX — Full Platform Video Walkthrough & Interactive Demo" },
+    { type: "image", src: "/assets/projects/jadimpex/jadimpex-logo-transparent.png", caption: "JADIMPEX — Official Corporate Brand Logo" },
     { type: "image", src: "/assets/projects/jadimpex/jadimpex-trade-solutions.png", caption: "JADIMPEX — Global Trade & Export Solutions Hero Showcase" },
     { type: "image", src: "/assets/projects/jadimpex/jadimpex-dusk-showcase.png", caption: "JADIMPEX — International Logistics & Global Supply Chain at Dusk" },
     { type: "image", src: "/assets/projects/jadimpex/jadimpex-brand.png", caption: "JADIMPEX — High-Resolution Corporate Brand Identity" },
@@ -241,6 +242,7 @@ const PROJECT_MEDIA = {
   ],
   tresssalon: [
     { type: "video", src: "/assets/projects/tress-salon/tresssalonvid.mp4", caption: "Tress Salon — Full Platform Video Walkthrough & Booking Experience" },
+    { type: "image", src: "/assets/projects/tress-salon/tress-logo.svg", caption: "Tress Salon — Signature Brand Logo & 'T' Emblem" },
     { type: "image", src: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Luxury Salon Interior & Premium Styling Stations" },
     { type: "image", src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Exclusive Bridal Lounge & Bespoke Makeover Suite" },
     { type: "image", src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Keratin & Protein Hair Smoothening Therapy" },
@@ -1163,15 +1165,30 @@ export default function App() {
                           e.stopPropagation()
                           setMediaModal({ projectId: "tresssalon", index: 0 })
                         }}
-                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-rose-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-rose-400 shadow-sm transition-all hover:border-rose-400/50 hover:shadow-[0_0_15px_rgba(244,63,94,0.25)] sm:h-18 cursor-pointer"
+                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-orange-500/20 bg-gradient-to-br from-stone-900 via-neutral-950 to-black p-2 shadow-sm transition-all hover:border-orange-500/60 hover:shadow-[0_0_18px_rgba(234,88,12,0.3)] sm:h-18 cursor-pointer"
                         title="Watch Tress Salon Video & Screenshots"
                       >
-                        TRESS<span className="text-white">SALON</span>
-                        <span className="absolute top-1.5 right-1.5 flex items-center gap-1 rounded-full bg-rose-500/25 px-1.5 py-0.5 text-[9px] font-semibold text-rose-200 border border-rose-500/30 backdrop-blur-sm">
-                          <Play className="h-2 w-2 fill-rose-300 text-rose-300" /> Video
+                        <div className="flex items-center gap-2">
+                          <img
+                            src="/assets/projects/tress-salon/tress-logo.svg"
+                            alt="Tress Salon Logo"
+                            className="h-10 w-10 rounded-xl object-contain shadow-md drop-shadow transition-transform group-hover/thumb:scale-110"
+                          />
+                          <div className="text-left font-serif">
+                            <span className="block text-sm font-bold text-white tracking-tight leading-none">
+                              Tress<span className="text-orange-500">.</span>
+                            </span>
+                            <span className="block text-[8px] uppercase tracking-widest text-stone-400 font-sans mt-0.5">
+                              Salon
+                            </span>
+                          </div>
+                        </div>
+
+                        <span className="absolute top-1.5 right-1.5 flex items-center gap-1 rounded-full bg-orange-500/25 px-1.5 py-0.5 text-[9px] font-semibold text-orange-200 border border-orange-500/30 backdrop-blur-sm">
+                          <Play className="h-2 w-2 fill-orange-300 text-orange-300" /> Video
                         </span>
                         <div className="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover/thumb:opacity-100 transition-opacity">
-                          <Play className="h-6 w-6 fill-rose-400 text-rose-400 drop-shadow" />
+                          <Play className="h-6 w-6 fill-orange-400 text-orange-400 drop-shadow" />
                         </div>
                       </button>
                     </div>
@@ -1225,7 +1242,7 @@ export default function App() {
                           <Play className="h-3.5 w-3.5 fill-rose-400 text-rose-400 transition-transform group-hover/btn:scale-110" />
                           <span>Watch Video &amp; Screenshots</span>
                           <span className="rounded-full bg-rose-400/20 px-1.5 py-0.5 text-[10px] font-bold text-rose-200">
-                            6
+                            7
                           </span>
                         </button>
                       </div>
@@ -1246,10 +1263,14 @@ export default function App() {
                           e.stopPropagation()
                           setMediaModal({ projectId: "jadimpex", index: 0 })
                         }}
-                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-amber-950/40 via-slate-900 to-black text-xs font-bold tracking-wider text-amber-400 shadow-sm transition-all hover:border-amber-400/50 hover:shadow-[0_0_15px_rgba(245,158,11,0.25)] sm:h-18 cursor-pointer"
+                        className="group/thumb relative flex h-20 w-full items-center justify-center overflow-hidden rounded-lg border border-amber-500/20 bg-gradient-to-br from-stone-900 via-neutral-950 to-black p-2 shadow-sm transition-all hover:border-amber-400/60 hover:shadow-[0_0_18px_rgba(245,158,11,0.3)] sm:h-18 cursor-pointer"
                         title="Watch JADIMPEX Video & Screenshots"
                       >
-                        JADI<span className="text-white">MPEX</span>
+                        <img
+                          src="/assets/projects/jadimpex/jadimpex-logo-transparent.png"
+                          alt="JADIMPEX Logo"
+                          className="h-10 max-w-[90%] object-contain drop-shadow transition-transform group-hover/thumb:scale-105"
+                        />
                         <span className="absolute top-1.5 right-1.5 flex items-center gap-1 rounded-full bg-amber-500/25 px-1.5 py-0.5 text-[9px] font-semibold text-amber-200 border border-amber-500/30 backdrop-blur-sm">
                           <Play className="h-2 w-2 fill-amber-300 text-amber-300" /> Video
                         </span>
@@ -1307,7 +1328,7 @@ export default function App() {
                           <Play className="h-3.5 w-3.5 fill-amber-400 text-amber-400 transition-transform group-hover/btn:scale-110" />
                           <span>Watch Video &amp; Screenshots</span>
                           <span className="rounded-full bg-amber-400/20 px-1.5 py-0.5 text-[10px] font-bold text-amber-200">
-                            5
+                            6
                           </span>
                         </button>
                       </div>

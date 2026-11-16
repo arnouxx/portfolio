@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="copper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e5806c" />
+      <stop offset="50%" stop-color="#b84632" />
+      <stop offset="100%" stop-color="#7e2d21" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="28" fill="url(#copper)" />
+  <text x="50" y="68" font-family="'Cormorant Garamond', serif, Georgia" font-size="54" font-weight="700" fill="#ffffff" text-anchor="middle">T</text>
+</svg>
+
