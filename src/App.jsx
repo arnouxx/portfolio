@@ -213,89 +213,225 @@ const navItems = [
   { label: "Skills", href: "#skills", id: "skills" },
 ]
 
+const PROJECT_TITLES = {
+  devscord: "Devscord",
+  smartattendance: "Smart Attendance System",
+  vrwebtour: "VR Web Tour",
+  tresssalon: "Tress Salon",
+  jadimpex: "JADIMPEX",
+}
+
 const PROJECT_MEDIA = {
   devscord: [
-    { type: "image", src: "/assets/projects/devscord/devmainpg01.png", caption: "Dashboard Home" },
-    { type: "image", src: "/assets/projects/devscord/devmainpg02.png", caption: "Project Board" },
-    { type: "image", src: "/assets/projects/devscord/devmainpg03.png", caption: "Code Editor" },
-    { type: "image", src: "/assets/projects/devscord/devmainpg04.png", caption: "Real-Time Chat" },
-    { type: "image", src: "/assets/projects/devscord/devs_codejoinerpage.png", caption: "Code Joiner" },
-    { type: "image", src: "/assets/projects/devscord/dev_code_creatorpage.png", caption: "Code Creator" },
-    { type: "image", src: "/assets/projects/devscord/dev_createaccpage.png", caption: "Create Account" },
-    { type: "image", src: "/assets/projects/devscord/devcodeeditpg.png", caption: "Code Edit Page" },
+    { type: "image", src: "/assets/projects/devscord/devmainpg01.png", caption: "Devscord — Real-Time Developer Dashboard & Rooms" },
+    { type: "image", src: "/assets/projects/devscord/devmainpg02.png", caption: "Devscord — Active Project Channels & Collaboration Hub" },
+    { type: "image", src: "/assets/projects/devscord/devmainpg03.png", caption: "Devscord — Cloud Code Editor & Live Workspace" },
+    { type: "image", src: "/assets/projects/devscord/devmainpg04.png", caption: "Devscord — Real-Time Chat & Thread Discussions" },
+    { type: "image", src: "/assets/projects/devscord/devs_codejoinerpage.png", caption: "Devscord — Join Live Coding Session by Room Key" },
+    { type: "image", src: "/assets/projects/devscord/dev_code_creatorpage.png", caption: "Devscord — Create & Configure New Collaboration Room" },
+    { type: "image", src: "/assets/projects/devscord/dev_createaccpage.png", caption: "Devscord — Secure Authentication & Profile Setup" },
+    { type: "image", src: "/assets/projects/devscord/devcodeeditpg.png", caption: "Devscord — Full In-Browser IDE with Syntax Highlighting" },
   ],
-  smartattendance: [],
-  vrwebtour: [],
-  tresssalon: [],
-  jadimpex: [],
+  jadimpex: [
+    { type: "image", src: "/assets/projects/jadimpex/jadimpex-trade-solutions.png", caption: "JADIMPEX — Global Trade & Export Solutions Hero Showcase" },
+    { type: "image", src: "/assets/projects/jadimpex/jadimpex-dusk-showcase.png", caption: "JADIMPEX — International Logistics & Global Supply Chain at Dusk" },
+    { type: "image", src: "/assets/projects/jadimpex/jadimpex-brand.png", caption: "JADIMPEX — High-Resolution Corporate Brand Identity" },
+    { type: "image", src: "/assets/projects/jadimpex/jadimpex-clean-logo.png", caption: "JADIMPEX — Eco-Friendly Jute & Bamboo Export Emblem" },
+  ],
+  tresssalon: [
+    { type: "image", src: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Luxury Salon Interior & Premium Styling Stations" },
+    { type: "image", src: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Exclusive Bridal Lounge & Bespoke Makeover Suite" },
+    { type: "image", src: "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Keratin & Protein Hair Smoothening Therapy" },
+    { type: "image", src: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Precision Fade & Bespoke Men's Grooming" },
+    { type: "image", src: "https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&q=80&w=1200", caption: "Tress Salon — Custom Nail Lounge & Pedicure Care" },
+  ],
+  smartattendance: [
+    { type: "image", src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=1200", caption: "Smart Attendance — Real-time Geo-verification & QR Token Validation" },
+  ],
+  vrwebtour: [
+    { type: "image", src: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&q=80&w=1200", caption: "VR Web Tour — 360° Immersive WebGL & Three.js Virtual Tour Environment" },
+  ],
 }
 
 function ProjectMediaModal({ projectId, onClose }) {
   const [index, setIndex] = useState(0)
   const media = PROJECT_MEDIA[projectId] || []
+  const title = PROJECT_TITLES[projectId] || "Project Media"
   const item = media[index] || {}
   const isImage = item.type === "image"
 
+  // Lock background scrolling while modal is open
+  useEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = originalStyle
+    }
+  }, [])
+
+  // Keyboard navigation: Escape to close, Left/Right arrow keys to cycle
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose()
+      if (e.key === "ArrowLeft" && media.length > 1) {
+        setIndex((i) => (i === 0 ? media.length - 1 : i - 1))
+      }
+      if (e.key === "ArrowRight" && media.length > 1) {
+        setIndex((i) => (i === media.length - 1 ? 0 : i + 1))
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [media.length, onClose])
+
   if (!media.length) {
     return (
-      <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-6 text-white">
-        <button onClick={onClose} className="absolute top-4 right-4 z-10 text-white/60 hover:text-white">
-          <X className="h-6 w-6" />
-        </button>
-        <h3 className="mb-4 text-lg font-medium">No media available</h3>
-        <p className="max-w-xs text-center text-white/50">
-          Screenshots and videos for this project will appear here soon.
-        </p>
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-6 backdrop-blur-md"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) onClose()
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="relative w-full max-w-md rounded-2xl border border-white/10 bg-zinc-950 p-6 text-center text-white shadow-2xl"
+        >
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 rounded-full p-1.5 text-white/50 hover:bg-white/10 hover:text-white transition-colors"
+            aria-label="Close modal"
+          >
+            <X className="h-5 w-5" />
+          </button>
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/10 text-blue-400">
+            <Eye className="h-6 w-6" />
+          </div>
+          <h3 className="text-lg font-semibold">{title}</h3>
+          <p className="mt-2 text-sm text-white/60">
+            Screenshots &amp; videos for {title} will appear here soon.
+          </p>
+          <button
+            onClick={onClose}
+            className="mt-6 inline-flex items-center justify-center rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white hover:bg-white/20 transition-colors"
+          >
+            Close Viewer
+          </button>
+        </motion.div>
       </div>
     )
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 md:p-6 text-white">
-      <button onClick={onClose} className="absolute top-4 right-4 z-10 text-white/60 hover:text-white">
-        <X className="h-6 w-6" />
-      </button>
-
-      <div className="relative w-full max-w-5xl max-h-[82vh] flex items-center justify-center">
+    <div
+      className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 p-4 md:p-6 backdrop-blur-md text-white select-none"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      {/* Top Header */}
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between pb-3 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <span className="rounded-md border border-blue-500/30 bg-blue-500/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-blue-400">
+            {title}
+          </span>
+          <span className="text-xs text-white/50">
+            Screenshots &amp; Videos · {index + 1} of {media.length}
+          </span>
+        </div>
         <button
-          onClick={() => setIndex((i) => (i === 0 ? media.length - 1 : i - 1))}
-          disabled={media.length === 1}
-          aria-label="Previous"
-          className="absolute left-2 z-20 p-2.5 rounded-full bg-black/60 text-white hover:bg-white/20 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+          onClick={onClose}
+          className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-white/70 hover:bg-white/15 hover:text-white transition-colors cursor-pointer"
+          aria-label="Close viewer"
         >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        {isImage ? (
-          <img
-            src={item.src}
-            alt={item.caption || ""}
-            className="max-w-full max-h-[64vh] object-contain rounded-lg border border-white/10 shadow-2xl"
-            loading="lazy"
-          />
-        ) : (
-          <video
-            controls
-            autoPlay
-            playsInline
-            className="max-w-full max-h-[64vh] rounded-lg border border-white/10 shadow-2xl bg-black"
-          >
-            <source src={item.src} />
-            Your browser does not support the video tag.
-          </video>
-        )}
-        <button
-          onClick={() => setIndex((i) => (i === media.length - 1 ? 0 : i + 1))}
-          disabled={media.length === 1}
-          aria-label="Next"
-          className="absolute right-2 z-20 p-2.5 rounded-full bg-black/60 text-white hover:bg-white/20 disabled:opacity-30 disabled:pointer-events-none transition-colors"
-        >
-          <ChevronRight className="h-5 w-5" />
+          <span>Close</span>
+          <X className="h-4 w-4" />
         </button>
       </div>
 
-      <div className="mt-6 flex items-center justify-between w-full max-w-5xl px-4">
-        <span className="text-sm text-white/60">{item.caption || ""}</span>
-        <span className="text-sm text-white/50">{index + 1} / {media.length}</span>
+      {/* Main Stage */}
+      <div className="relative mx-auto flex w-full max-w-6xl flex-1 items-center justify-center py-4">
+        {media.length > 1 && (
+          <button
+            onClick={() => setIndex((i) => (i === 0 ? media.length - 1 : i - 1))}
+            aria-label="Previous image"
+            className="absolute left-2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/70 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 cursor-pointer"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+        )}
+
+        <div className="flex h-full max-h-[66vh] w-full items-center justify-center overflow-hidden">
+          {isImage ? (
+            <motion.img
+              key={item.src}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2 }}
+              src={item.src}
+              alt={item.caption || title}
+              className="max-h-[66vh] max-w-full rounded-xl border border-white/10 object-contain shadow-2xl"
+              loading="lazy"
+            />
+          ) : (
+            <motion.video
+              key={item.src}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2 }}
+              controls
+              autoPlay
+              playsInline
+              className="max-h-[66vh] max-w-full rounded-xl border border-white/10 bg-black shadow-2xl"
+            >
+              <source src={item.src} />
+              Your browser does not support the video tag.
+            </motion.video>
+          )}
+        </div>
+
+        {media.length > 1 && (
+          <button
+            onClick={() => setIndex((i) => (i === media.length - 1 ? 0 : i + 1))}
+            aria-label="Next image"
+            className="absolute right-2 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/70 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 cursor-pointer"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        )}
+      </div>
+
+      {/* Caption & Thumbnail Dock */}
+      <div className="mx-auto w-full max-w-6xl pt-2">
+        <div className="mb-3 text-center">
+          <p className="text-sm font-medium text-white/90">{item.caption || title}</p>
+        </div>
+
+        {/* Thumbnail Strip */}
+        {media.length > 1 && (
+          <div className="flex items-center justify-center gap-2 overflow-x-auto py-1">
+            {media.map((m, idx) => (
+              <button
+                key={m.src + idx}
+                onClick={() => setIndex(idx)}
+                className={`relative h-12 w-20 shrink-0 overflow-hidden rounded-lg border transition-all cursor-pointer ${
+                  idx === index
+                    ? "border-blue-400 ring-2 ring-blue-500/50 scale-105"
+                    : "border-white/20 opacity-50 hover:opacity-100"
+                }`}
+              >
+                {m.type === "image" ? (
+                  <img src={m.src} alt="" className="h-full w-full object-cover" />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-zinc-900 text-[10px] text-white">
+                    ▶ Video
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
@@ -786,9 +922,12 @@ export default function App() {
                       <h3 className="font-medium leading-snug text-white">
                         <div>
                           <a
-                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
-                            href="#"
-                            onClick={(e) => e.preventDefault()}
+                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base cursor-pointer"
+                            href="#projects"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              setMediaModal({ projectId: "devscord", index: 0 })
+                            }}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -823,9 +962,9 @@ export default function App() {
                             e.stopPropagation()
                             setMediaModal({ projectId: "devscord", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
                         >
-                          <Eye className="h-3 w-3" />
+                          <Eye className="h-3.5 w-3.5" />
                           Show Screenshots &amp; Videos
                         </button>
                       </div>
@@ -849,9 +988,12 @@ export default function App() {
                       <h3 className="font-medium leading-snug text-white">
                         <div>
                           <a
-                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
-                            href="#"
-                            onClick={(e) => e.preventDefault()}
+                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base cursor-pointer"
+                            href="#projects"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              setMediaModal({ projectId: "smartattendance", index: 0 })
+                            }}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -888,9 +1030,9 @@ export default function App() {
                             e.stopPropagation()
                             setMediaModal({ projectId: "smartattendance", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
                         >
-                          <Eye className="h-3 w-3" />
+                          <Eye className="h-3.5 w-3.5" />
                           Show Screenshots &amp; Videos
                         </button>
                       </div>
@@ -914,9 +1056,12 @@ export default function App() {
                       <h3 className="font-medium leading-snug text-white">
                         <div>
                           <a
-                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
-                            href="#"
-                            onClick={(e) => e.preventDefault()}
+                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base cursor-pointer"
+                            href="#projects"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              setMediaModal({ projectId: "vrwebtour", index: 0 })
+                            }}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -950,9 +1095,9 @@ export default function App() {
                             e.stopPropagation()
                             setMediaModal({ projectId: "vrwebtour", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
                         >
-                          <Eye className="h-3 w-3" />
+                          <Eye className="h-3.5 w-3.5" />
                           Show Screenshots &amp; Videos
                         </button>
                       </div>
@@ -976,9 +1121,12 @@ export default function App() {
                       <h3 className="font-medium leading-snug text-white">
                         <div>
                           <a
-                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
-                            href="#"
-                            onClick={(e) => e.preventDefault()}
+                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base cursor-pointer"
+                            href="#projects"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              setMediaModal({ projectId: "tresssalon", index: 0 })
+                            }}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -990,13 +1138,14 @@ export default function App() {
                       </h3>
 
                       <p className="mt-2 text-sm leading-normal text-white/50">
-                        A modern beauty & hair salon booking platform that lets customers browse
-                        services, book appointments online, and manage their salon visits seamlessly.
-                        Designed for a smooth client experience with responsive UI.
+                        A modern beauty &amp; luxury family salon booking platform featuring an
+                        interactive service catalog, online appointment booking system, and dynamic
+                        aesthetic gallery. Designed for an elegant, high-end experience with smooth
+                        responsive UI.
                       </p>
 
                       <ul className="mt-3 flex flex-wrap gap-2" aria-label="Technologies used">
-                        {["React", "Tailwind CSS", "Node.js", "MongoDB"].map((tech) => (
+                        {["React", "Tailwind CSS", "Framer Motion", "Lucide React", "Booking System"].map((tech) => (
                           <li
                             key={tech}
                             className="flex items-center rounded-full bg-rose-500/10 px-3 py-1 text-xs font-medium leading-5 text-rose-300"
@@ -1012,9 +1161,9 @@ export default function App() {
                             e.stopPropagation()
                             setMediaModal({ projectId: "tresssalon", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
                         >
-                          <Eye className="h-3 w-3" />
+                          <Eye className="h-3.5 w-3.5" />
                           Show Screenshots &amp; Videos
                         </button>
                       </div>
@@ -1038,9 +1187,12 @@ export default function App() {
                       <h3 className="font-medium leading-snug text-white">
                         <div>
                           <a
-                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
-                            href="#"
-                            onClick={(e) => e.preventDefault()}
+                            className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base cursor-pointer"
+                            href="#projects"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              setMediaModal({ projectId: "jadimpex", index: 0 })
+                            }}
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -1052,13 +1204,13 @@ export default function App() {
                       </h3>
 
                       <p className="mt-2 text-sm leading-normal text-white/50">
-                        An import-export trade website for JADIMPEX showcasing global product
-                        catalogs, shipment tracking, and inquiry management. Built to connect
-                        buyers and suppliers across international markets.
+                        A premier global export and sourcing enterprise web platform showcasing
+                        sustainable Jute packaging, biodegradable Bamboo goods, and handcrafted
+                        genuine Leather accessories for international B2B commerce.
                       </p>
 
                       <ul className="mt-3 flex flex-wrap gap-2" aria-label="Technologies used">
-                        {["HTML", "CSS", "JavaScript", "PHP", "MySQL"].map((tech) => (
+                        {["React", "TypeScript", "Tailwind CSS", "Vite", "Global B2B"].map((tech) => (
                           <li
                             key={tech}
                             className="flex items-center rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium leading-5 text-amber-300"
@@ -1074,9 +1226,9 @@ export default function App() {
                             e.stopPropagation()
                             setMediaModal({ projectId: "jadimpex", index: 0 })
                           }}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70 hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all cursor-pointer"
                         >
-                          <Eye className="h-3 w-3" />
+                          <Eye className="h-3.5 w-3.5" />
                           Show Screenshots &amp; Videos
                         </button>
                       </div>
@@ -1098,13 +1250,6 @@ export default function App() {
                 </a>
               </div>
             </motion.section>
-
-            {mediaModal && (
-              <ProjectMediaModal
-                projectId={mediaModal.projectId}
-                onClose={() => setMediaModal(null)}
-              />
-            )}
 
             {/* --- SKILLS & TOOLKIT SECTION --- */}
             <motion.section
@@ -1253,6 +1398,16 @@ export default function App() {
           })}
         </motion.nav>
       </div>
+
+      {/* Global Project Screenshots & Videos Modal */}
+      <AnimatePresence>
+        {mediaModal && (
+          <ProjectMediaModal
+            projectId={mediaModal.projectId}
+            onClose={() => setMediaModal(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }
