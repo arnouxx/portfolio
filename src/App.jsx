@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
-import { ArrowUpRight, Mail, Eye, X, ChevronLeft, ChevronRight, Play, Film } from "lucide-react"
+import { ArrowUpRight, Mail, Eye, X, ChevronLeft, ChevronRight, Play, Code2, Globe, Sparkles, Cpu, CheckCircle2 } from "lucide-react"
 import Lenis from "lenis"
 import "lenis/dist/lenis.css"
 
@@ -210,7 +210,7 @@ const navItems = [
   { label: "About", href: "#about", id: "about" },
   { label: "Internship & Educations", href: "#experience", id: "experience" },
   { label: "Projects", href: "#projects", id: "projects" },
-  { label: "Skills", href: "#skills", id: "skills" },
+  { label: "Services", href: "#services", id: "services" },
 ]
 
 const PROJECT_TITLES = {
@@ -515,7 +515,7 @@ export default function App() {
   // Scroll spy to highlight active section on navs
   useEffect(() => {
     const handleScroll = () => {
-      const sectionIds = ["about", "experience", "projects", "skills"]
+      const sectionIds = ["about", "experience", "projects", "services"]
       const scrollPosition = window.scrollY + 260
 
       for (const id of sectionIds) {
@@ -590,12 +590,21 @@ export default function App() {
               </h1>
 
               <h2 className="mt-3 text-lg font-medium tracking-tight text-white/90 sm:text-xl">
-                Full-Stack Web Developer
+                Full-Stack Web Developer &amp; Freelancer
               </h2>
 
               <p className="mt-4 max-w-xs text-sm leading-normal text-white/50">
-                I build accessible, perfect experiences for the web.
+                I build accessible, high-performance web products, interactive digital experiences, and custom web applications for clients worldwide.
               </p>
+
+              {/* Freelance Availability Status Badge */}
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>Available for Freelance Projects</span>
+              </div>
 
               {/* Brittany Chiang style Line-Indicator Nav */}
               <nav className="nav hidden lg:block" aria-label="In-page jump links">
@@ -1351,104 +1360,254 @@ export default function App() {
               </div>
             </motion.section>
 
-            {/* --- SKILLS & TOOLKIT SECTION --- */}
+            {/* --- SERVICES & FREELANCE SECTION --- */}
             <motion.section
-              id="skills"
+              id="services"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
-              aria-label="Development toolkit"
+              aria-label="Freelance services and offerings"
             >
               {/* Mobile Sticky Section Header */}
               <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-black/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
                 <h2 className="text-sm font-bold uppercase tracking-widest text-white">
-                  Skills
+                  Services
                 </h2>
               </div>
 
-              {/* Current Focus Highlight */}
-              <div className="rounded-2xl border border-blue-500/20 bg-blue-500/[0.04] p-6 mb-8">
-                <p className="text-xs font-semibold uppercase tracking-wider text-blue-400">
-                  Current Focus
+              {/* Freelance Overview Hero Card */}
+              <div className="rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-500/[0.08] via-blue-500/[0.02] to-transparent p-6 mb-8 backdrop-blur-sm">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-2 w-2 rounded-full bg-blue-400 animate-pulse" />
+                  <p className="text-xs font-semibold uppercase tracking-wider text-blue-400">
+                    Freelance &amp; Contract Work
+                  </p>
+                </div>
+                <h3 className="mt-2 text-xl font-semibold text-white">
+                  End-to-End Web Solutions for Businesses &amp; Founders
+                </h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-white/60">
+                  As an independent freelance developer, I partner with companies, startups, and individuals to create reliable, modern web applications. From architecture and database design to pixel-perfect, accessible user interfaces, I take projects from concept to production with clear communication and fast turnaround.
                 </p>
-                <h3 className="mt-2 text-xl font-semibold text-white">Python Development</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/50">
-                  Strengthening Python fundamentals, problem-solving, backend development, APIs,
-                  and practical full-stack application development.
-                </p>
+
+                <div className="mt-5 grid grid-cols-2 gap-3 pt-4 border-t border-white/10 text-xs text-white/70">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
+                    <span>Direct Communication</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
+                    <span>Agile &amp; Rapid Delivery</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
+                    <span>Responsive &amp; Accessible</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
+                    <span>Production-Ready Code</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Skills breakdown */}
-              <div className="grid gap-6 sm:grid-cols-2">
-                {/* Languages */}
-                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-white/40">
-                    01 · Languages
-                  </p>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {["Python", "JavaScript", "HTML", "CSS"].map((s) => (
-                      <li
-                        key={s}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-white/70"
-                      >
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              {/* Freelance Services List */}
+              <ul className="group/list space-y-8">
+                {/* Service 1: Full-Stack Web Applications */}
+                <li>
+                  <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                    <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
 
-                {/* Frontend */}
-                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-white/40">
-                    02 · Frontend
-                  </p>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {["React", "Vite", "Tailwind CSS", "Three.js"].map((s) => (
-                      <li
-                        key={s}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-white/70"
-                      >
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-white/40 sm:col-span-2">
+                      <span className="inline-flex items-center gap-1.5 text-blue-400 font-mono">
+                        <Code2 className="h-4 w-4 text-blue-400" />
+                        <span>01 · Web Apps</span>
+                      </span>
+                    </header>
 
-                {/* Backend & Data */}
-                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-white/40">
-                    03 · Backend & Data
-                  </p>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {["Flask", "REST APIs", "PostgreSQL", "MySQL"].map((s) => (
-                      <li
-                        key={s}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-white/70"
-                      >
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    <div className="z-10 sm:col-span-6">
+                      <h3 className="font-medium leading-snug text-white">
+                        <span className="text-base font-semibold">
+                          Full-Stack Web Application Development
+                        </span>
+                      </h3>
 
-                {/* Tools & Other */}
-                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-white/40">
-                    04 · Tools & Other
-                  </p>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {["Git", "GitHub", "OpenCV", "MediaPipe"].map((s) => (
-                      <li
-                        key={s}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-white/70"
-                      >
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
+                      <p className="mt-2 text-sm leading-normal text-white/50">
+                        Design and engineering of custom web applications tailored to your specific business logic. Complete full-stack implementations featuring secure authentication, relational database modeling, REST APIs, and real-time interactive dashboards.
+                      </p>
+
+                      <ul className="mt-3 flex flex-wrap gap-2" aria-label="Key features">
+                        {["Custom SaaS & Dashboards", "User Auth & Roles", "Real-Time WebSockets", "React", "Flask / Python", "PostgreSQL / MySQL"].map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium leading-5 text-blue-300"
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+
+                {/* Service 2: Custom Business & Enterprise Platforms */}
+                <li>
+                  <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                    <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
+
+                    <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-white/40 sm:col-span-2">
+                      <span className="inline-flex items-center gap-1.5 text-blue-400 font-mono">
+                        <Globe className="h-4 w-4 text-blue-400" />
+                        <span>02 · Business</span>
+                      </span>
+                    </header>
+
+                    <div className="z-10 sm:col-span-6">
+                      <h3 className="font-medium leading-snug text-white">
+                        <span className="text-base font-semibold">
+                          Custom Business Platforms &amp; Booking Systems
+                        </span>
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-normal text-white/50">
+                        Tailored digital platforms built to convert visitors and streamline business operations. Specializing in luxury service booking portals, enterprise trade websites, interactive product catalogs, and high-impact corporate brand presences.
+                      </p>
+
+                      <ul className="mt-3 flex flex-wrap gap-2" aria-label="Key features">
+                        {["Appointment Booking", "Enterprise B2B Portals", "Product Showcases", "Conversion-Focused", "SEO & Speed Optimization"].map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium leading-5 text-blue-300"
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+
+                {/* Service 3: Frontend Engineering & Interactive UI */}
+                <li>
+                  <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                    <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
+
+                    <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-white/40 sm:col-span-2">
+                      <span className="inline-flex items-center gap-1.5 text-blue-400 font-mono">
+                        <Sparkles className="h-4 w-4 text-blue-400" />
+                        <span>03 · Frontend</span>
+                      </span>
+                    </header>
+
+                    <div className="z-10 sm:col-span-6">
+                      <h3 className="font-medium leading-snug text-white">
+                        <span className="text-base font-semibold">
+                          Interactive Frontend &amp; 3D Web Experiences
+                        </span>
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-normal text-white/50">
+                        Translating design ideas into responsive, 60fps web experiences. Fluid micro-interactions, custom design systems, and immersive WebGL / Three.js 3D tours that captivate users while remaining accessible and ultra-fast across all devices.
+                      </p>
+
+                      <ul className="mt-3 flex flex-wrap gap-2" aria-label="Key features">
+                        {["Framer Motion", "Three.js 3D Tours", "Tailwind CSS", "Micro-Interactions", "Mobile-First UI"].map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium leading-5 text-blue-300"
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+
+                {/* Service 4: REST APIs & Backend Architecture */}
+                <li>
+                  <div className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
+                    <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-white/[0.03] lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]" />
+
+                    <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-white/40 sm:col-span-2">
+                      <span className="inline-flex items-center gap-1.5 text-blue-400 font-mono">
+                        <Cpu className="h-4 w-4 text-blue-400" />
+                        <span>04 · Backend</span>
+                      </span>
+                    </header>
+
+                    <div className="z-10 sm:col-span-6">
+                      <h3 className="font-medium leading-snug text-white">
+                        <span className="text-base font-semibold">
+                          RESTful APIs &amp; System Integration
+                        </span>
+                      </h3>
+
+                      <p className="mt-2 text-sm leading-normal text-white/50">
+                        Clean and maintainable backend infrastructure. Architecture of secure REST APIs, third-party service integrations, relational database design and optimization, tokenized security, and specialized capabilities like QR verification and GPS geolocation.
+                      </p>
+
+                      <ul className="mt-3 flex flex-wrap gap-2" aria-label="Key features">
+                        {["RESTful API Design", "Database Modeling", "API Security & Auth", "QR / GPS Verification", "Cloud & Server Setup"].map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-center rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium leading-5 text-blue-300"
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              {/* Freelance Workflow / How I Work */}
+              <div className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+                <p className="text-xs font-semibold uppercase tracking-wider text-white/40 mb-4">
+                  How We Work Together
+                </p>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-mono font-bold text-blue-400">01 / Scope &amp; Plan</span>
+                    <h4 className="text-sm font-semibold text-white">Discovery &amp; Strategy</h4>
+                    <p className="text-xs leading-relaxed text-white/50">
+                      We outline goals, architecture, tech stack, milestones, and deliverable timelines.
+                    </p>
+                  </div>
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-mono font-bold text-blue-400">02 / Develop &amp; Iterate</span>
+                    <h4 className="text-sm font-semibold text-white">Milestone Development</h4>
+                    <p className="text-xs leading-relaxed text-white/50">
+                      Regular progress previews, iterative feedback cycles, and clean code throughout.
+                    </p>
+                  </div>
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-mono font-bold text-blue-400">03 / Deploy &amp; Support</span>
+                    <h4 className="text-sm font-semibold text-white">Launch &amp; Handover</h4>
+                    <p className="text-xs leading-relaxed text-white/50">
+                      Full deployment, production speed audits, code handover, and post-launch support.
+                    </p>
+                  </div>
                 </div>
+              </div>
+
+              {/* Freelance Inquiry CTA Card */}
+              <div className="mt-8 rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <h4 className="text-base font-semibold text-white">Have a project in mind?</h4>
+                  <p className="mt-1 text-xs leading-relaxed text-white/60">
+                    I'm currently accepting new freelance projects and contract roles. Let's discuss your timeline and vision.
+                  </p>
+                </div>
+                <a
+                  href="mailto:abdulazim49787@gmail.com?subject=Freelance%20Project%20Inquiry"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-600/30 hover:bg-blue-500 transition-all duration-200 shrink-0"
+                >
+                  <Mail className="h-4 w-4" />
+                  <span>Start a Conversation</span>
+                </a>
               </div>
             </motion.section>
 
