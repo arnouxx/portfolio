@@ -1,0 +1,6 @@
+# robots.txt for Abdul Azim Portfolio
+User-agent: *
+Allow: /
+
+# Security & disclosure
+# See /.well-known/security.txt for security vulnerability reporting

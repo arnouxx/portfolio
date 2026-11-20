@@ -43,6 +43,14 @@ function InstagramIcon({ className = "w-5 h-5" }) {
   )
 }
 
+// Obfuscated mailto link constructor to mitigate automated crawler scraping
+function getSafeMailto(subject = "") {
+  const user = "abdulazim49787"
+  const domain = "gmail.com"
+  const base = `mailto:${user}@${domain}`
+  return subject ? `${base}?subject=${encodeURIComponent(subject)}` : base
+}
+
 const CHESS_PIECES = ["♟", "♞", "♝", "♜", "♛", "♚"]
 
 function getChessCursorSvg(piece, isWhiteTheme) {
@@ -647,7 +655,7 @@ export default function App() {
                 <a
                   href="https://github.com/arnouxx"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="block hover:text-white transition-colors duration-200"
                   aria-label="GitHub"
                 >
@@ -658,7 +666,7 @@ export default function App() {
                 <a
                   href="https://www.linkedin.com/in/abdul-azim-32b194287"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="block hover:text-white transition-colors duration-200"
                   aria-label="LinkedIn"
                 >
@@ -669,7 +677,7 @@ export default function App() {
                 <a
                   href="https://www.instagram.com/arnoux000/"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="block hover:text-white transition-colors duration-200"
                   aria-label="Instagram"
                 >
@@ -678,7 +686,7 @@ export default function App() {
               </li>
               <li>
                 <a
-                  href="mailto:abdulazim49787@gmail.com"
+                  href={getSafeMailto()}
                   className="block hover:text-white transition-colors duration-200"
                   aria-label="Email"
                 >
@@ -759,9 +767,9 @@ export default function App() {
                         <div>
                           <a
                             className="inline-flex items-baseline font-medium leading-tight text-white hover:text-blue-400 focus-visible:text-blue-400 group/link text-base"
-                            href="#"
+                            href="https://travarsa.com"
                             target="_blank"
-                            rel="noreferrer"
+                            rel="noopener noreferrer"
                           >
                             <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"></span>
                             <span>
@@ -1349,9 +1357,9 @@ export default function App() {
               {/* View Full Archive Link */}
               <div className="mt-12">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/arnouxx?tab=repositories"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="group inline-flex items-center text-sm font-semibold leading-tight text-white hover:text-blue-400"
                 >
                   <span>View Full Project Archive</span>
@@ -1602,7 +1610,7 @@ export default function App() {
                   </p>
                 </div>
                 <a
-                  href="mailto:abdulazim49787@gmail.com?subject=Freelance%20Project%20Inquiry"
+                  href={getSafeMailto("Freelance Project Inquiry")}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-lg shadow-blue-600/30 hover:bg-blue-500 transition-all duration-200 shrink-0"
                 >
                   <Mail className="h-4 w-4" />
