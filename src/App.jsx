@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion"
-import { ArrowUpRight, Mail, Eye, X, ChevronLeft, ChevronRight, Play, Code2, Globe, Sparkles, Cpu, CheckCircle2 } from "lucide-react"
+import { ArrowUpRight, Mail, Eye, X, ChevronLeft, ChevronRight, Play, Code2, Globe, Sparkles, Cpu, CheckCircle2, Download, FileText } from "lucide-react"
 import Lenis from "lenis"
 import "lenis/dist/lenis.css"
 
@@ -612,6 +612,28 @@ export default function App() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                 </span>
                 <span>Available for Freelance Projects</span>
+              </div>
+
+              {/* Resume View & Download */}
+              <div className="mt-4 flex items-center gap-3">
+                <a
+                  href="/Abdul_Azim_CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-400 transition-all duration-200 hover:bg-blue-500/20 hover:text-blue-300"
+                >
+                  <FileText className="h-4 w-4" />
+                  <span>View Resume</span>
+                </a>
+                <a
+                  href="/Abdul_Azim_CV.pdf"
+                  download="Abdul_Azim_CV.pdf"
+                  className="inline-flex items-center justify-center rounded-full border border-blue-500/30 bg-blue-500/10 p-2 text-blue-400 transition-all duration-200 hover:bg-blue-500/20 hover:text-blue-300"
+                  aria-label="Download Resume"
+                  title="Download Resume"
+                >
+                  <Download className="h-4 w-4" />
+                </a>
               </div>
 
               {/* Brittany Chiang style Line-Indicator Nav */}
